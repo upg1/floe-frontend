@@ -1,6 +1,5 @@
 import React from 'react';
 import DealDetails from '../../../components/DealManagement/DealDetails';
-import { getDealById } from '../../../services/dealService'; // Example service to fetch a specific deal
 
 export default async function DealPage({ params }) {
   const { id } = params; // Get the deal ID from the URL
