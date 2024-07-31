@@ -6,7 +6,7 @@ const DealList = ({ deals }) => {
   const { push } = useRouter(); // Destructure push from useRouter
 
   const handleNavigation = (id) => {
-    push(`/deal/${id}`); // Use push for navigation
+    push(`/deals/${id}`); // Use push for navigation
   };
 
   return (

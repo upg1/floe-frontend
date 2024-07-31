@@ -1,10 +1,8 @@
-'use client'
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import DealList from '../components/DealManagement/DealList';
-import { useGlobalContext } from '../context/Providers'; // Import context hook
-
-
-
+import { useGlobalContext } from '../context/Providers';
 
 export default function HomePage() {
   const { globalState, setGlobalState } = useGlobalContext();
@@ -12,20 +10,18 @@ export default function HomePage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate fetching data and updating global state
+    // Use dummy data for now
     const fetchDeals = async () => {
       try {
-        // Simulate an API call or data fetch with dummy data
-        const response = await fetch('/api/deals'); // Adjust URL as needed
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const deals = await response.json();
+        const dummyDeals = [
+          { id: 1, name: 'Deal 1', status: 'Active' },
+          { id: 2, name: 'Deal 2', status: 'Pending' },
+        ];
 
-        setGlobalState(prevState => ({ ...prevState, dealData: deals }));
+        setGlobalState(prevState => ({ ...prevState, dealData: dummyDeals }));
       } catch (error) {
         console.error('Error fetching deals:', error);
-        setError(error.message);
+        setError('Failed to load deals');
       } finally {
         setLoading(false);
       }
@@ -35,21 +31,25 @@ export default function HomePage() {
   }, [setGlobalState]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="text-lg font-semibold">Loading deals...</div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error loading deals: {error}</div>;
-  }
-
-  if (!globalState.dealData || globalState.dealData.length === 0) {
-    return <div>No deals available.</div>;
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="text-lg font-semibold text-red-500">Error loading deals: {error}</div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2>Home Page</h2>
-      <DealList deals={globalState.dealData} /> {/* Render the list of deals from global state */}
+    <div className="flex-1 p-4">
+      <h2 className="text-xl font-bold mb-4">Deal List</h2>
+      <DealList deals={globalState.dealData} />
     </div>
   );
 }

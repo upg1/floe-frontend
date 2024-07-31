@@ -1,7 +1,7 @@
 import React from 'react';
-import './globals.css'; // Global styles
-import Dashboard from '../components/Dashboard/Dashboard';
 import { Providers } from '../context/Providers'; // Import context provider
+import Navbar from '../components/Navbar'; // Import the Navbar component
+import './globals.css'
 
 export const metadata = {
   title: 'Knowledge Management System',
@@ -13,23 +13,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Providers>
-          <div className="layout">
-            <header>
-              <h1>Knowledge Management System</h1>
-              <nav>
-                {/* Add navigation links here */}
-                <ul>
-                  <li><a href="/">Home</a></li>
-                  <li><a href="/document-editor">Document Editor</a></li>
-                  <li><a href="/deals">Deals</a></li>
-                </ul>
-              </nav>
-            </header>
-            <main>
-              <Dashboard /> {/* Optional dashboard or sidebar */}
+          <div className="min-h-screen flex flex-col">
+            <Navbar /> {/* Add the Navbar component here */}
+            <main className="flex-1 p-4">
               {children}
             </main>
-            <footer>
+            <footer className="bg-gray-800 text-white p-4 text-center">
               <p>&copy; 2024 Knowledge Management System</p>
             </footer>
           </div>
