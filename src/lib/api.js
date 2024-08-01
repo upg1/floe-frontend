@@ -29,3 +29,26 @@ export async function fetchClauses() {
     { id: 5, title: 'Conditions Precedent', text: 'The obligations of the Buyer to consummate the acquisition are subject to the fulfillment of the following conditions: (i) the completion of a satisfactory due diligence review of the Company; (ii) the receipt of all required regulatory approvals; (iii) the execution and delivery of all transaction documents; and (iv) the absence of any material adverse change in the Company\'s business, operations, or financial condition.' },
   ];
 }
+
+// lib/api.js
+
+export async function fetchRegulations(searchTerm) {
+  const allRegulations = [
+    { id: 1, title: 'Regulation on Confidentiality', text: 'Companies must ensure the confidentiality of sensitive business information and prevent unauthorized disclosure to third parties.', keywords: ['confidential'] },
+    { id: 2, title: 'Regulation on Non-Compete Agreements', text: 'Employees must not engage in competitive activities for a specified period following their departure from the company.', keywords: ['non-compete'] },
+    { id: 3, title: 'Regulation on Financial Disclosures', text: 'Companies are required to provide accurate financial statements and disclose any material liabilities or financial risks.', keywords: ['financial'] },
+    { id: 4, title: 'Regulation on Indemnification', text: 'Companies must indemnify their officers and directors against certain liabilities incurred while performing their duties.', keywords: ['indemnification'] },
+    { id: 5, title: 'Regulation on Data Protection', text: 'Organizations must implement measures to protect personal data and comply with relevant data protection laws.', keywords: ['data protection'] },
+  ];
+
+  // Convert search term to lowercase and split into words
+  const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  const searchWords = lowerCaseSearchTerm.split(/\s+/);
+
+  return allRegulations.filter(regulation =>
+    regulation.keywords.some(keyword =>
+      searchWords.includes(keyword.toLowerCase())
+    )
+  );
+}
+

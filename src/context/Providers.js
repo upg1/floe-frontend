@@ -1,6 +1,6 @@
 'use client';
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { fetchDeals, fetchDocuments, fetchClauses } from '../lib/api'; // Ensure you have these functions
+import { fetchDeals, fetchDocuments, fetchClauses, fetchRegulations } from '../lib/api'; // Ensure you have these functions
 
 const GlobalContext = createContext();
 
@@ -8,8 +8,9 @@ export function Providers({ children }) {
   const [globalState, setGlobalState] = useState({
     user: null,
     dealData: [],
-    documentData: [], // Updated state for documents
-    clauses: [], // Added state for clauses
+    documentData: [],
+    clauses: [],
+    regulations: [], // Added state for regulations
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,7 +25,7 @@ export function Providers({ children }) {
           ...prevState,
           dealData: deals,
           documentData: documents,
-          clauses: clauses, // Set fetched clauses in state
+          clauses: clauses,
         }));
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -36,6 +37,19 @@ export function Providers({ children }) {
 
     fetchData();
   }, []);
+
+  const fetchRelevantRegulations = async (searchTerm) => {
+    try {
+      const regulations = await fetchRegulations(searchTerm);
+      setGlobalState(prevState => ({
+        ...prevState,
+        regulations: regulations, // Set fetched regulations in state
+      }));
+    } catch (err) {
+      console.error('Error fetching regulations:', err);
+      setError('Failed to load regulations');
+    }
+  };
 
   const saveDocument = (updatedDocument) => {
     setGlobalState(prevState => {
@@ -64,7 +78,14 @@ export function Providers({ children }) {
   };
 
   return (
-    <GlobalContext.Provider value={{ globalState, setGlobalState, saveDocument, loading, error }}>
+    <GlobalContext.Provider value={{ 
+      globalState, 
+      setGlobalState, 
+      saveDocument, 
+      fetchRelevantRegulations, 
+      loading, 
+      error 
+    }}>
       {children}
     </GlobalContext.Provider>
   );
