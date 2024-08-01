@@ -35,7 +35,7 @@ const DraftEditor = ({ clauses }) => {
   };
 
   return (
-    <div>
+    <div className="flex-1 p-4">
       <Editor
         editorState={editorState}
         handleKeyCommand={handleKeyCommand}
@@ -43,7 +43,11 @@ const DraftEditor = ({ clauses }) => {
       />
       <div>
         {clauses.map(clause => (
-          <button key={clause.id} onClick={() => replaceClause(clause)}>
+          <button
+            key={clause.id}
+            onClick={() => replaceClause(clause)}
+            className="px-4 py-2 mt-2 text-blue-700 bg-blue-100 rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
             Insert {clause.title}
           </button>
         ))}

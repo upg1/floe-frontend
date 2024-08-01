@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import DraftEditor from '../../components/DocumentEditor/DraftEditor';
 import ClauseLibrarySidebar from '../../components/DocumentEditor/ClauseLibrarySidebar';
@@ -40,7 +40,7 @@ export default function DocumentEditorPage() {
   }
 
   return (
-    <div className="document-editor-page">
+    <div className="flex min-h-screen">
       <ClauseLibrarySidebar
         clauses={globalState.clauseData}
         onSelectClause={(clause) => console.log(clause)}
