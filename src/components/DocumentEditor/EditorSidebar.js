@@ -4,18 +4,17 @@ const EditorSidebar = ({ documents, onSelectDocument }) => {
   return (
     <div className="sidebar">
       <h2>Documents</h2>
-      <ul className="document-list">
+      <div className="document-list">
         {documents.map(doc => (
-          <li key={doc.id} className="document-item">
-            <button 
-              className="document-button" 
-              onClick={() => onSelectDocument(doc)}
-            >
-              {doc.title}
-            </button>
-          </li>
+          <button
+            key={doc.id}
+            onClick={() => onSelectDocument(doc)}
+            className="document-button"
+          >
+            {doc.title}
+          </button>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

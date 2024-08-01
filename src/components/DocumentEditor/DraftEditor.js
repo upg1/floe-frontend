@@ -1,61 +1,56 @@
 'use client';
 
 import React from 'react';
-import { Editor, RichUtils, Modifier } from 'draft-js';
-import 'draft-js/dist/Draft.css';
+import { Editor, EditorState, Modifier, RichUtils } from 'draft-js';
+import 'draft-js/dist/Draft.css'; // Import the editor styles
 
-const DraftEditor = ({ editorState, onEditorStateChange, onSave, clauses = [] }) => {
-  const handleKeyCommand = (command) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      onEditorStateChange(newState);
-      return 'handled';
-    }
-    return 'not-handled';
+const DraftEditor = ({ editorState, onEditorStateChange, onSave, clauses }) => {
+  const handleSave = () => {
+    onSave(editorState);
   };
 
-  const replaceClause = (clause) => {
-    const selection = editorState.getSelection();
+  const handleClauseClick = (clause) => {
     const contentState = editorState.getCurrentContent();
+    const selectionState = editorState.getSelection();
+    const contentStateWithEntity = contentState.createEntity('CLAUSE', 'MUTABLE', { text: clause.text });
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    
     const newContentState = Modifier.replaceText(
-      contentState,
-      selection,
-      clause.text
+      contentStateWithEntity,
+      selectionState,
+      clause.text,
+      null,
+      entityKey
     );
+
     const newEditorState = EditorState.push(
       editorState,
       newContentState,
       'insert-characters'
     );
+    
     onEditorStateChange(newEditorState);
   };
 
-  const handleSaveClick = () => {
-    onSave(editorState);
-  };
-
   return (
-    <div className="editor">
-      <div className="editor-content">
-        <Editor
-          editorState={editorState}
-          handleKeyCommand={handleKeyCommand}
-          onChange={onEditorStateChange}
-        />
-      </div>
-      <div className="clause-buttons mt-4">
+    <div className="editor-container">
+      <div className="clause-grid mb-4">
         {clauses.map(clause => (
-          <button
-            key={clause.id}
-            onClick={() => replaceClause(clause)}
-            className="btn btn-primary w-full mb-2"
+          <button 
+            key={clause.id} 
+            onClick={() => handleClauseClick(clause)}
+            className="clause-button"
           >
-            Insert {clause.title}
+            {clause.title}
           </button>
         ))}
       </div>
-      <button onClick={handleSaveClick} className="btn btn-primary save-button">
-        Save Document
+      <Editor
+        editorState={editorState}
+        onChange={onEditorStateChange}
+      />
+      <button onClick={handleSave} className="btn-primary mt-4">
+        Save
       </button>
     </div>
   );

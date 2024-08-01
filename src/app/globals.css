@@ -22,6 +22,7 @@ div {
   font-size: 1.25rem;
 }
 
+/* Document Editor Page */
 .document-editor-page {
   display: flex;
   height: 100vh;
@@ -32,6 +33,7 @@ div {
   flex: 1;
 }
 
+/* Sidebar */
 .sidebar {
   width: 300px;
   background-color: #f4f4f4;
@@ -48,40 +50,11 @@ div {
   color: #333;
 }
 
-.sidebar button {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 0.375rem;
-  text-align: left;
-  cursor: pointer;
-  margin-bottom: 0.5rem;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  font-size: 1rem;
-}
-
-.sidebar button:hover {
-  background-color: #e2e8f0;
-  border-color: #cbd5e1;
-}
-
-.sidebar button:focus {
-  outline: none;
-  border-color: #1d4ed8; /* Highlight color on focus */
-  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.3); /* Light blue shadow */
-}
-
-/* Additional Styles for EditorSidebar */
+/* Document Buttons */
 .document-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
-}
-
-.document-item {
-  margin-bottom: 0.5rem;
 }
 
 .document-button {
@@ -93,6 +66,7 @@ div {
   border-radius: 0.375rem;
   text-align: left;
   cursor: pointer;
+  margin-bottom: 0.5rem;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   font-size: 1rem;
   color: #333;
@@ -110,6 +84,7 @@ div {
 }
 
 
+/* Editor Container */
 .editor-container {
   flex: 1;
   padding: 1rem;
@@ -117,25 +92,30 @@ div {
   flex-direction: column;
 }
 
-.editor {
-  flex: 1;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
+/* Clause Grid */
+.clause-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.editor-content {
-  flex: 1;
+.clause-button {
+  padding: 0.5rem;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.save-button {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+.clause-button:hover {
+  background-color: #e2e8f0;
 }
 
 /* Button Styles */
-.btn {
+.btn-primary {
   display: inline-block;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -143,35 +123,12 @@ div {
   text-align: center;
   border-radius: 0.375rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.btn-primary {
   background-color: #1d4ed8; /* Blue */
   color: #ffffff;
   border: 1px solid transparent;
+  transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
   background-color: #1e40af; /* Darker Blue */
-}
-
-.btn-secondary {
-  background-color: #f3f4f6; /* Light Gray */
-  color: #111827; /* Dark Gray */
-  border: 1px solid #e5e7eb; /* Light Border */
-}
-
-.btn-secondary:hover {
-  background-color: #e5e7eb; /* Slightly Darker Gray */
-}
-
-.btn-danger {
-  background-color: #dc2626; /* Red */
-  color: #ffffff;
-  border: 1px solid transparent;
-}
-
-.btn-danger:hover {
-  background-color: #b91c1c; /* Darker Red */
 }

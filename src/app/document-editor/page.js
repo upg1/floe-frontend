@@ -65,21 +65,20 @@ const DocumentEditorPage = () => {
 
   return (
     <div className="document-editor-page">
-      <div className="sidebar-and-editor">
-        <EditorSidebar
-          documents={globalState.documentData}
-          onSelectDocument={handleSelectDocument}
-        />
-        <div className="editor-container">
-          {currentDocument && (
-            <DraftEditor
-              editorState={editorState}
-              onEditorStateChange={setEditorState}
-              onSave={handleSaveDocument}
-              clauses={[]}
-            />
-          )}
-        </div>
+      <EditorSidebar
+        documents={globalState.documentData}
+        onSelectDocument={handleSelectDocument}
+        clauses={globalState.clauses} // Pass clauses from global state
+      />
+      <div className="editor-container">
+        {currentDocument && (
+          <DraftEditor
+            editorState={editorState}
+            onEditorStateChange={setEditorState}
+            onSave={handleSaveDocument}
+            clauses={globalState.clauses} // Pass clauses to the editor
+          />
+        )}
       </div>
     </div>
   );
