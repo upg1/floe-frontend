@@ -48,7 +48,6 @@ export default function HomePage() {
 
   return (
     <div className="flex-1 p-4">
-      <h2 className="text-xl font-bold mb-4">Deal List</h2>
       <DealList deals={globalState.dealData} />
     </div>
   );
