@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'; // Import the Navbar component
 import './globals.css'
 
 export const metadata = {
-  title: 'Knowledge Management System',
+  title: 'Floe',
   description: 'A system for managing M&A deals and legal documents.',
 };
 

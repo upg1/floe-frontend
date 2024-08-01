@@ -9,59 +9,55 @@ import { useGlobalContext } from '../../context/Providers';
 
 const DocumentEditorPage = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // Use useSearchParams to get the query params
   const { globalState, saveDocument } = useGlobalContext();
   const [currentDocument, setCurrentDocument] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initializeDocument = async () => {
-      let docId = searchParams.get('id');
+    const initializeDocument = () => {
+      const docId = searchParams.get('id') || (globalState.documentData[0] && globalState.documentData[0].id.toString()) || 'document-1';
+      console.log('docId from searchParams:', docId);
 
-      if (!docId || !globalState.documentData.some(doc => doc.id.toString() === docId)) {
-        docId = globalState.documentData.length > 0 ? globalState.documentData[0].id.toString() : 'document-1';
-        router.replace(`/document-editor?id=${docId}`, undefined, { shallow: true });
+      const foundDocument = globalState.documentData.find(doc => doc.id.toString() === docId);
+      console.log('Found document:', foundDocument);
+
+      if (foundDocument) {
+        setCurrentDocument(foundDocument);
+        try {
+          const contentState = convertFromRaw(JSON.parse(foundDocument.content));
+          setEditorState(EditorState.createWithContent(contentState));
+        } catch (error) {
+          console.error('Failed to parse document content:', error);
+          setEditorState(EditorState.createEmpty());
+        }
+      } else {
+        router.replace(`/document-editor?id=document-1`, undefined, { shallow: true });
       }
-
-      const doc = globalState.documentData.find(doc => doc.id.toString() === docId) || {
-        id: 'document-1',
-        title: 'Untitled Document',
-        content: JSON.stringify({ blocks: [], entityMap: {} })
-      };
-
-      setCurrentDocument(doc);
-
-      try {
-        const contentState = convertFromRaw(JSON.parse(doc.content));
-        setEditorState(EditorState.createWithContent(contentState));
-      } catch (error) {
-        console.error('Failed to parse document content:', error);
-        setEditorState(EditorState.createEmpty());
-      }
-
-      setLoading(false);
     };
 
     initializeDocument();
   }, [searchParams, globalState.documentData, router]);
 
-  const handleSaveDocument = (newEditorState) => {
+  const handleSaveDocument = () => {
     if (currentDocument) {
-      const contentState = newEditorState.getCurrentContent();
+      const contentState = editorState.getCurrentContent();
       const rawContent = JSON.stringify(convertToRaw(contentState));
       const updatedDocument = { ...currentDocument, content: rawContent };
       saveDocument(updatedDocument);
+      setCurrentDocument(updatedDocument); // Update currentDocument with the latest content
     }
   };
 
-  const handleSelectDocument = (doc) => {
-    router.push(`/document-editor?id=${doc.id}`, undefined, { shallow: true });
+  const handleEditorStateChange = (newEditorState) => {
+    setEditorState(newEditorState);
   };
 
-  if (loading) {
-    return <p className="loading">Loading...</p>;
-  }
+  const handleSelectDocument = (doc) => {
+    router.replace(`/document-editor?id=${doc.id}`, undefined, { shallow: true });
+  };
+
+
 
   return (
     <div className="document-editor-page">
@@ -74,7 +70,7 @@ const DocumentEditorPage = () => {
         {currentDocument && (
           <DraftEditor
             editorState={editorState}
-            onEditorStateChange={setEditorState}
+            onEditorStateChange={handleEditorStateChange}
             onSave={handleSaveDocument}
             clauses={globalState.clauses} // Pass clauses to the editor
           />

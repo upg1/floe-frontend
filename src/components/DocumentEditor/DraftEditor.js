@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Editor, EditorState, Modifier, RichUtils } from 'draft-js';
+import { Editor, EditorState, Modifier } from 'draft-js';
 import 'draft-js/dist/Draft.css'; // Import the editor styles
 
 const DraftEditor = ({ editorState, onEditorStateChange, onSave, clauses }) => {
@@ -14,7 +14,7 @@ const DraftEditor = ({ editorState, onEditorStateChange, onSave, clauses }) => {
     const selectionState = editorState.getSelection();
     const contentStateWithEntity = contentState.createEntity('CLAUSE', 'MUTABLE', { text: clause.text });
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    
+
     const newContentState = Modifier.replaceText(
       contentStateWithEntity,
       selectionState,
@@ -28,7 +28,7 @@ const DraftEditor = ({ editorState, onEditorStateChange, onSave, clauses }) => {
       newContentState,
       'insert-characters'
     );
-    
+
     onEditorStateChange(newEditorState);
   };
 
