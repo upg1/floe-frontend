@@ -52,3 +52,28 @@ export async function fetchRegulations(searchTerm) {
   );
 }
 
+// lib/api.js
+
+export const fetchEntities = async () => {
+  // Simulated data for different deal dimensions
+  return {
+    assets: [
+      { id: 1, name: 'Brand X', value: '$1M', deal: 'Deal 1', context: 'Major brand in consumer electronics.' },
+      { id: 2, name: 'Patents Y', value: '$500K', deal: 'Deal 2', context: 'Key patents in renewable energy.' }
+    ],
+    liabilities: [
+      { id: 1, description: 'Loan from Bank A', amount: '$200K', deal: 'Deal 1', context: 'Outstanding loan with a 5% interest rate.' },
+      { id: 2, description: 'Pending litigation', amount: '$100K', deal: 'Deal 2', context: 'Ongoing legal case that may impact valuation.' }
+    ],
+    covenants: [
+      { id: 1, name: 'Non-Compete Clause', details: 'Restrictions on competing businesses post-acquisition.', deal: 'Deal 1', context: 'Prevents competition in the same market segment.' },
+      { id: 2, name: 'Confidentiality Agreement', details: 'Obligations to maintain confidentiality of sensitive information.', deal: 'Deal 2', context: 'Ensures non-disclosure of trade secrets and sensitive data.' }
+    ],
+    regulations: [
+      { id: 1, name: 'Data Protection Regulation', text: 'Companies must implement measures to protect personal data.', deal: 'Deal 1', context: 'Compliance with GDPR and local data protection laws.' },
+      { id: 2, name: 'Financial Disclosure Regulation', text: 'Companies must provide accurate financial statements.', deal: 'Deal 2', context: 'Ensures transparency in financial reporting.' }
+    ]
+  };
+};
+
+

@@ -20,6 +20,7 @@ const Navbar = () => {
           <Link href="/" className="hover:underline">Home</Link>
           <Link href="/document-editor" className="hover:underline">Document Editor</Link>
           <Link href="/deals" className="hover:underline">Deals</Link>
+          <Link href="/deal-anatomy" className="hover:underline">Deal Anatomy</Link> {/* New Link */}
         </nav>
         <div className="md:hidden flex items-center">
           <button
@@ -67,6 +68,16 @@ const Navbar = () => {
                 </Link>
               )}
             </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  href="/deal-anatomy"
+                  className={`block px-4 py-2 text-sm ${active ? 'bg-gray-900' : ''}`}
+                >
+                  Deal Anatomy
+                </Link>
+              )}
+            </Menu.Item> {/* New Mobile Menu Item */}
           </Menu.Items>
         </Menu>
       </div>
