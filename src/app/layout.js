@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
               {children}
             </main>
             <footer className="bg-gray-800 text-white p-4 text-center">
-              <p>&copy; 2024 Knowledge Management System</p>
+              <p>&copy; 2024 Floe</p>
             </footer>
           </div>
         </Providers>
